@@ -35,6 +35,9 @@ class UDebug
 	void writePipe();
 	void waitOnResponse();
 	void waitOnResponse(int *newVariable);
+	void waitOnResponse(float *newVariable);
+	void waitOnResponse(char *newVariable);
+	void waitOnResponse(unsigned int *newVariable);
 	  
   public:
 	UDebug(uint16_t);	
@@ -44,6 +47,9 @@ class UDebug
 	void breakpoint();
 	void breakpoint(int variable);
 	void breakpoint(int* variable);//editable variable
+	void breakpoint(float* variable);//editable variable
+	void breakpoint(char* variable);//editable variable
+	void breakpoint(unsigned int* variable);//editable variable
 	
 };
 

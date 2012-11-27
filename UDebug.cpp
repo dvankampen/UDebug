@@ -82,22 +82,50 @@ void UDebug::waitOnResponse()
 	// if there's data available, read a packet
 	if(size) {
 		dbg.read(buffer, size);
-		dbg.flush();
+		//dbg.flush();
 	}
 }
 
 void UDebug::waitOnResponse(int *newVariable)
 {
+	int returnedVar;	
 	int size = dbg.parsePacket();
 	while (!size) {
 		delay(10);
 		size = dbg.parsePacket();
-		dbg.flush();
+		//dbg.flush();
 	}
 	// if there's data available, read a packet
 	if(size) {
 		dbg.read(buffer, size);
-		itoa(*newVariable, buffer,10);
+		char *tok = strtok(buffer, "|");
+		while (tok != NULL) {
+			returnedVar = (int)*tok;
+			tok = strtok(NULL, "|");
+		}
+		*newVariable = returnedVar;
+		dbg.flush();
+	}
+}
+
+void UDebug::waitOnResponse(float *newVariable)
+{
+	float returnedVar;	
+	int size = dbg.parsePacket();
+	while (!size) {
+		delay(10);
+		size = dbg.parsePacket();
+		//dbg.flush();
+	}
+	// if there's data available, read a packet
+	if(size) {
+		dbg.read(buffer, size);
+		char *tok = strtok(buffer, "|");
+		while (tok != NULL) {
+			returnedVar = (float)*tok; //increases range of valid return values.
+			tok = strtok(NULL, "|");
+		}
+		*newVariable = returnedVar;
 		dbg.flush();
 	}
 }
